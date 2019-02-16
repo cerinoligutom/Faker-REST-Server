@@ -3,7 +3,8 @@ import { env } from '@app/config/environment';
 import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
-import { maintenanceRouter } from './routes/maintenance.routes';
+
+import { maintenanceRouter, userRouter } from './routes';
 
 const app = express();
 
@@ -13,6 +14,7 @@ const startApp = async () => {
   app.use(compression());
 
   app.use('/api/maintenance', maintenanceRouter);
+  app.use('/api/users', userRouter);
 
   app.listen(env.PORT, () => {
     // tslint:disable-next-line:no-console

@@ -23,6 +23,19 @@ export class User extends Model {
     this.updatedAt = new Date();
   }
 
+  getUserDto() {
+    return {
+      id: this.id,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      username: this.username,
+      email: this.email,
+      avatarUrl: this.avatarUrl,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
+    };
+  }
+
   async $beforeInsert() {
     const salt = await passwordService.generateSalt();
     const hash = await passwordService.generateHash(this.hash, salt);
