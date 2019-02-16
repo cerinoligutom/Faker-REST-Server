@@ -7,20 +7,25 @@ export class Todo extends Model {
 
   description!: string;
   ownerId!: string;
-  createdAt!: Date;
-  updatedAt!: Date;
+  isDone!: boolean;
 
   // Optional eager relations
   owner?: User;
 
-  $beforeUpdate() {
-    this.updatedAt = new Date();
+  getDto() {
+    return {
+      id: this.id,
+      isDone: this.isDone,
+      description: this.description,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt
+    }
   }
 
   static get jsonSchema() {
     const schema: JsonSchema = {
       type: 'object',
-      required: ['createdBy', 'ownerId'],
+      required: ['description', 'ownerId'],
       properties: {
         id: { type: 'string' },
         description: { type: 'string' },

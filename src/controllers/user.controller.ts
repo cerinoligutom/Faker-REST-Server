@@ -5,8 +5,7 @@ import { BaseController } from './base.controller';
 export class UserController extends BaseController {
   async getAllUsers(req: Request, res: Response) {
     const users = await User.query();
-    const usersDto = users.map(user => user.getUserDto());
-
+    const usersDto = users.map(user => user.getDto());
     res.send(usersDto);
   }
 
@@ -19,7 +18,7 @@ export class UserController extends BaseController {
         message: 'Not found.'
       });
     } else {
-      res.send(user.getUserDto());
+      res.send(user.getDto());
     }
   }
 }

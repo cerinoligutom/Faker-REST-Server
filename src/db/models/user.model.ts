@@ -11,17 +11,11 @@ export class User extends Model {
   username!: string;
   email!: string;
   avatarUrl!: string;
-  createdAt!: Date | string;
-  updatedAt!: Date | string;
   hash!: string;
   salt!: string;
 
   // Optional eager relations
   todos?: Todo[];
-
-  $beforeUpdate() {
-    this.updatedAt = new Date();
-  }
 
   getDto() {
     return {
