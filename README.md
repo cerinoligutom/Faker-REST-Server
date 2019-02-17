@@ -4,6 +4,7 @@ A pet project for learning RESTful APIs with NodeJS as backend
 
 ### Features
 
+- Daily DB wipe and seed every midnight server time
 - Login
 - Register
 - Authentication with JWT
