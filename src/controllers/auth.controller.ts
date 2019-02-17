@@ -29,30 +29,24 @@ export class AuthController extends BaseController {
   }
 
   async register(req: Request, res: Response) {
-    try {
-      const {
-        firstName,
-        lastName,
-        username,
-        email,
-        password
-      }: IRegistrationForm = req.body;
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      password
+    }: IRegistrationForm = req.body;
 
-      await User.query().insert({
-        firstName,
-        lastName,
-        username,
-        email,
-        avatarUrl: faker.image.avatar(),
-        hash: password
-      });
+    await User.query().insert({
+      firstName,
+      lastName,
+      username,
+      email,
+      avatarUrl: faker.image.avatar(),
+      hash: password
+    });
 
-      res.send({ message: 'Successfully registered.' });
-    } catch (err) {
-      res.status(500).send({
-        message: 'Something went wrong.'
-      });
-    }
+    res.send({ message: 'Successfully registered.' });
   }
 
   async isAuthenticated(req: Request, res: Response) {
@@ -61,7 +55,7 @@ export class AuthController extends BaseController {
     } else {
       res.status(401).send({
         message: 'Unauthenticated.'
-      })
+      });
     }
   }
 }
