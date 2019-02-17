@@ -37,6 +37,24 @@ export class AuthController extends BaseController {
       password
     }: IRegistrationForm = req.body;
 
+    if (!password.trim().length) {
+      res.status(409).send({
+        message: `Bad password.`
+      });
+      return;
+    }
+
+    const existingUser = await User.query()
+      .where('username', username)
+      .first();
+
+    if (existingUser) {
+      res.status(409).send({
+        message: `Username ${username} is already taken.`
+      });
+      return;
+    }
+
     await User.query().insert({
       firstName,
       lastName,
