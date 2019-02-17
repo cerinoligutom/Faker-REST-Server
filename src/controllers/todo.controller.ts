@@ -25,10 +25,16 @@ export class TodoController extends BaseController {
   }
 
   async getTodosByUserId(req: Request, res: Response) {
-    const { userId } = req.params;
-    const todos = await Todo.query().where('ownerId', userId);
-    const todosDto = todos.map(todo => todo.getDto());
-    res.send(todosDto);
+    try {
+      const { userId } = req.params;
+      const todos = await Todo.query().where('ownerId', userId);
+      const todosDto = todos.map(todo => todo.getDto());
+      res.send(todosDto);
+    } catch (err) {
+      res.status(500).send({
+        message: err.message
+      });
+    }
   }
 
   async createTodo(req: Request, res: Response) {
@@ -48,63 +54,46 @@ export class TodoController extends BaseController {
       res.send(todo);
     } catch (err) {
       res.status(500).send({
-        message: 'Something went wrong.'
+        message: err.message
       });
     }
   }
 
   async updateTodo(req: Request, res: Response) {
-    const { id: todoId } = req.params;
-    const { description } = req.body;
+    try {
+      const { id: todoId } = req.params;
+      const { description, isDone } = req.body;
 
-    const todo = await Todo.query().patchAndFetchById(todoId, {
-      description
-    });
+      const todo = await Todo.query().patchAndFetchById(todoId, {
+        description,
+        isDone
+      });
 
-    if (todo) {
-      res.send(todo);
-    } else {
-      res.status(404).send({ message: 'Not found.' });
+      if (todo) {
+        res.send(todo);
+      } else {
+        res.status(404).send({ message: 'Not found.' });
+      }
+    } catch (err) {
+      res.status(500).send({
+        message: err.message
+      });
     }
   }
 
   async deleteTodo(req: Request, res: Response) {
-    const { id: todoId } = req.params;
+    try {
+      const { id: todoId } = req.params;
 
-    const numDeleted = await Todo.query()
-      .delete()
-      .where('id', todoId);
+      const numDeleted = await Todo.query()
+        .delete()
+        .where('id', todoId);
 
-    res.send({ success: numDeleted > 0 });
-  }
-
-  // https://softwareengineering.stackexchange.com/a/270421
-  async flagTodoDone(req: Request, res: Response) {
-    const { id: todoId } = req.params;
-
-    const todo = await Todo.query().patchAndFetchById(todoId, {
-      isDone: true
-    });
-
-    if (todo) {
-      res.send(todo);
-    } else {
-      res.status(404).send({ message: 'Not found.' });
-    }
-  }
-
-  // https://softwareengineering.stackexchange.com/a/270421
-  async flagTodoNotDone(req: Request, res: Response) {
-    const { id: todoId } = req.params;
-
-    const todo = await Todo.query().patchAndFetchById(todoId, {
-      isDone: false
-    });
-
-    if (todo) {
-      res.send(todo);
-    } else {
-      res.status(404).send({ message: 'Not found.' });
+      res.send({ success: numDeleted > 0 });
+    } catch (err) {
+      res.status(500).send({
+        message: err.message
+      });
     }
   }
 }

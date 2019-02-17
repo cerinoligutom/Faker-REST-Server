@@ -10,15 +10,23 @@ export class UserController extends BaseController {
   }
 
   async getUserById(req: Request, res: Response) {
-    const { id: userId } = req.params;
-    const user = await User.query().where('id', userId).first();
+    try {
+      const { id: userId } = req.params;
+      const user = await User.query()
+        .where('id', userId)
+        .first();
 
-    if (!user) {
-      res.status(404).send({
-        message: 'Not found.'
+      if (!user) {
+        res.status(404).send({
+          message: 'Not found.'
+        });
+      } else {
+        res.send(user.getDto());
+      }
+    } catch (err) {
+      res.status(500).send({
+        message: err.message
       });
-    } else {
-      res.send(user.getDto());
     }
   }
 }

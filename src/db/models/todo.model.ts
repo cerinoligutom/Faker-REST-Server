@@ -25,11 +25,12 @@ export class Todo extends Model {
   static get jsonSchema() {
     const schema: JsonSchema = {
       type: 'object',
-      required: ['description', 'ownerId'],
+      required: ['description', 'ownerId', 'isDone'],
       properties: {
         id: { type: 'string' },
         description: { type: 'string' },
-        ownerId: { type: 'string' }
+        ownerId: { type: 'string' },
+        isDone: { type: 'boolean' }
       }
     };
     return schema;
