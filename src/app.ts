@@ -6,6 +6,8 @@ import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import { scheduleJob } from 'node-schedule';
 import path from 'path';
+import swaggerUi from 'swagger-ui-express';
+const swaggerDocument = require('../swagger.json');
 
 import passport from 'passport';
 import './passport';
@@ -31,6 +33,9 @@ const startApp = async () => {
 
   // set path for static assets
   app.use(express.static(path.join(__dirname, 'public')));
+
+  // Swagger Docs
+  app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
   app.get('/', (req, res) => {
     const variables = {
