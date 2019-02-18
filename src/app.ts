@@ -34,9 +34,6 @@ const startApp = async () => {
   // set path for static assets
   app.use(express.static(path.join(__dirname, 'public')));
 
-  // Swagger Docs
-  app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-
   app.get('/', (req, res) => {
     const variables = {
       githubRepositoryUrl: 'https://github.com/cerino-ligutom/Faker-REST-Server',
@@ -50,6 +47,9 @@ const startApp = async () => {
   app.use('/api/users', userRouter);
   app.use('/api/todos', todoRouter);
   app.use('/api/auth', authRouter);
+  
+  // Swagger Docs
+  app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
   // Reset DB every midnight
   scheduleJob('0 0 * * *', fireDate => {

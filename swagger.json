@@ -18,8 +18,8 @@
     }
   ],
   "schemes": ["http"],
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": ["application/json", "application/xml"],
+  "produces": ["application/json", "application/xml"],
   "paths": {
     "/users": {
       "post": {
