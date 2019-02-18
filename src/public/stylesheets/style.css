@@ -31,11 +31,12 @@ section:first-child {
   border: 2px solid #1ba8f0;
 }
 
-.arrow_box:after, .arrow_box:before {
+.arrow_box:after,
+.arrow_box:before {
   top: 100%;
   left: 50%;
   border: solid transparent;
-  content: " ";
+  content: ' ';
   height: 0;
   width: 0;
   position: absolute;
@@ -135,6 +136,28 @@ section:first-child {
 
 .welcome .info-card .details {
   padding: 40px;
+}
+
+.welcome .get-started-button-container {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.welcome .get-started-button-container .get-started-button {
+  border-radius: 36px;
+  padding: 12px 24px;
+  background-color: #1ba8f0;
+  border: 2px solid white;
+  font-size: 1.5rem;
+  color: white;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.welcome .get-started-button-container .get-started-button:hover {
+  background-color: white;
+  color: #1ba8f0;
+  border-color: #1ba8f0;
 }
 
 .api-details .info-card {
