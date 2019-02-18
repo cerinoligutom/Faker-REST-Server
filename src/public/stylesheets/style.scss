@@ -31,32 +31,33 @@ section {
 }
 
 .arrow_box {
-	position: relative;
-	background: $blue;
-	border: 2px solid $blue;
+  position: relative;
+  background: $blue;
+  border: 2px solid $blue;
 }
-.arrow_box:after, .arrow_box:before {
-	top: 100%;
-	left: 50%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
+.arrow_box:after,
+.arrow_box:before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: ' ';
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
 }
 
 .arrow_box:after {
-	border-color: rgba($blue, 0);
-	border-top-color: $blue;
-	border-width: 10px;
-	margin-left: -10px;
+  border-color: rgba($blue, 0);
+  border-top-color: $blue;
+  border-width: 10px;
+  margin-left: -10px;
 }
 .arrow_box:before {
-	border-color: rgba($blue, 0);
-	border-top-color: $blue;
-	border-width: 13px;
-	margin-left: -13px;
+  border-color: rgba($blue, 0);
+  border-top-color: $blue;
+  border-width: 13px;
+  margin-left: -13px;
 }
 
 .welcome {
@@ -77,23 +78,15 @@ section {
     rgba($blue, 1) 0%,
     rgba($black, 1) 100%
   );
-  background: -o-linear-gradient(
-    top,
-    rgba($blue, 1) 0%,
-    rgba($black, 1) 100%
-  );
-  background: -ms-linear-gradient(
-    top,
-    rgba($blue, 1) 0%,
-    rgba($black, 1) 100%
-  );
+  background: -o-linear-gradient(top, rgba($blue, 1) 0%, rgba($black, 1) 100%);
+  background: -ms-linear-gradient(top, rgba($blue, 1) 0%, rgba($black, 1) 100%);
   background: linear-gradient(
     to bottom,
     rgba($blue, 1) 0%,
     rgba($black, 1) 100%
   );
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e535aa', endColorstr='#161e26', GradientType=0 );
-  
+
   color: white;
 
   .brand {
@@ -159,6 +152,29 @@ section {
       padding: 40px;
     }
   }
+
+  .get-started-button-container {
+    text-align: center;
+    margin-bottom: 40px;
+
+    .get-started-button {
+      border-radius: 36px;
+      padding: 12px 24px;
+      background-color: $blue;
+      border: 2px solid white;
+
+      font-size: 1.5rem;
+      color: white;
+
+      transition: all 0.5s;
+
+      &:hover {
+        background-color: white;
+        color: $blue;
+        border-color: $blue;
+      }
+    }
+  }
 }
 
 .api-details {
@@ -177,7 +193,7 @@ section {
 
     code {
       padding: 2px 6px;
-      border: 1px solid rgba(0,0,0,.1);
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
   }
 }

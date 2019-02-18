@@ -1,0 +1,391 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Faker REST API",
+    "description": "Available endpoints for Faker REST API",
+    "license": {
+      "name": "GPL-3.0",
+      "url": "https://opensource.org/licenses/gpl-3.0"
+    }
+  },
+  "host": "faker-rest.zeferinix.com",
+  "basePath": "/api/",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "API for user authorization in the system"
+    },
+    {
+      "name": "Users",
+      "description": "API for users in the system"
+    },
+    {
+      "name": "Todos",
+      "description": "API for todos in the system"
+    }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login a user to the system",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "body",
+            "description": "Login a user",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register a user to the system",
+        "parameters": [
+          {
+            "name": "registration",
+            "in": "body",
+            "description": "Register a user",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/isAuthenticated": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Check if request is authenticated.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user with given ID",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/todos": {
+      "get": {
+        "tags": ["Todos"],
+        "summary": "Get all todos in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Todos"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Todos"],
+        "summary": "Create todo in system",
+        "parameters": [
+          {
+            "name": "todo",
+            "in": "body",
+            "description": "Todo that we want to create",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "New todo is created",
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            }
+          }
+        }
+      }
+    },
+    "/todos/{todoId}": {
+      "parameters": [
+        {
+          "name": "todoId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Todos"],
+        "summary": "Get todo with given ID",
+        "responses": {
+          "200": {
+            "description": "Todo is found",
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update todo with given ID",
+        "tags": ["Todos"],
+        "parameters": [
+          {
+            "name": "todo",
+            "in": "body",
+            "description": "Todo with new values of properties",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "isDone": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todo is updated",
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete todo with given ID",
+        "tags": ["Todos"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todo is deleted",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todos/users/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Todos"],
+        "summary": "Get todos of a given user ID",
+        "responses": {
+          "200": {
+            "description": "User todos are found",
+            "schema": {
+              "$ref": "#/definitions/Todos"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "required": ["id", "username", "firstName", "lastName"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "email": {
+          "type": "string"
+        },
+        "avatarUrl": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "Users": {
+      "type": "array",
+      "$ref": "#/definitions/User"
+    },
+    "Todo": {
+      "required": ["id", "ownerId", "isDone", "description"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "isDone": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        },
+        "ownerId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "Todos": {
+      "type": "array",
+      "$ref": "#/definitions/Todo"
+    }
+  }
+}

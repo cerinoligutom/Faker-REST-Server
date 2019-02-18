@@ -6,6 +6,8 @@ import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import { scheduleJob } from 'node-schedule';
 import path from 'path';
+import swaggerUi from 'swagger-ui-express';
+const swaggerDocument = require('../swagger.json');
 
 import passport from 'passport';
 import './passport';
@@ -45,6 +47,9 @@ const startApp = async () => {
   app.use('/api/users', userRouter);
   app.use('/api/todos', todoRouter);
   app.use('/api/auth', authRouter);
+  
+  // Swagger Docs
+  app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
   // Reset DB every midnight
   scheduleJob('0 0 * * *', fireDate => {
