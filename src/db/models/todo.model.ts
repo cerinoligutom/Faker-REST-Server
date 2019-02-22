@@ -16,6 +16,7 @@ export class Todo extends Model {
     return {
       id: this.id,
       isDone: this.isDone,
+      ownerId: this.ownerId,
       description: this.description,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
