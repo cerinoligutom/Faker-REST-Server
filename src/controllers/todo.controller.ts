@@ -41,7 +41,8 @@ export class TodoController extends BaseController {
 
     const todo = await Todo.query().insert({
       description,
-      ownerId: req.user.id
+      ownerId: req.user.id,
+      isDone: false
     });
 
     res.send(todo);

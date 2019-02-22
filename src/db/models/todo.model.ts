@@ -22,6 +22,11 @@ export class Todo extends Model {
     }
   }
 
+  async $beforeInsert() {
+    super.$beforeInsert();
+    this.isDone = false;
+  }
+
   static get jsonSchema() {
     const schema: JsonSchema = {
       type: 'object',
