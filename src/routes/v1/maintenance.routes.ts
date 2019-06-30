@@ -5,7 +5,7 @@ const maintenanceController = new MaintenanceController();
 
 const router = express.Router();
 
-router.get('/health-check', maintenanceController.healthCheck);
-router.get('/server-time', maintenanceController.serverTime);
+router.get('/maintenance/health-check', maintenanceController.healthCheck);
+router.get('/maintenance/server-time', maintenanceController.serverTime);
 
 export const maintenanceRouter = router;

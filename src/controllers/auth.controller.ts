@@ -8,11 +8,20 @@ import { BaseController } from './base.controller';
 export class AuthController extends BaseController {
   login(req: Request, res: Response, next: NextFunction) {
     passport.authenticate('local', async (err, user: User, info) => {
-      if (err || !user) {
+      console.log('err:', err);
+      console.log('user:', user);
+      console.log('info:', info);
+
+      if (err) {
         return next(err);
       }
 
+      if (!user) {
+        return res.status(401).send(info);
+      }
+
       req.login(user, { session: false }, async error => {
+        console.log('error:', error);
         if (error) {
           return next(error);
         }
@@ -67,9 +76,10 @@ export class AuthController extends BaseController {
     res.send({ message: 'Successfully registered.' });
   }
 
-  async isAuthenticated(req: Request, res: Response) {
+  async me(req: Request, res: Response) {
     if (req.user) {
-      res.send(req.user);
+      const { hash, salt, ...user } = req.user;
+      res.send(user);
     } else {
       res.status(401).send({
         message: 'Unauthenticated.'

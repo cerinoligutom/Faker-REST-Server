@@ -11,7 +11,8 @@
     "clean": "rimraf ./dist",
     "pm2:start-app": "pm2 start ecosystem.config.js",
     "pm2:logs": "pm2 logs",
-    "seed": "knex --knexfile ./knexfile.ts seed:run"
+    "seed": "knex --knexfile ./knexfile.ts seed:run",
+    "apidoc": "apidoc -i ./src/routes/v1/ -o ./apidoc/v1/"
   },
   "repository": {
     "type": "git",
@@ -40,7 +41,6 @@
     "@types/passport-jwt": "^3.0.1",
     "@types/passport-local": "^1.0.33",
     "@types/shortid": "0.0.29",
-    "@types/swagger-ui-express": "^3.0.0",
     "dotenv": "^6.2.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^2.6.3",
@@ -50,6 +50,7 @@
     "tslint-config-prettier": "^1.18.0"
   },
   "dependencies": {
+    "apidoc": "^0.17.7",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.3",
     "cors": "^2.8.5",
@@ -66,8 +67,14 @@
     "passport-local": "^1.0.0",
     "shortid": "^2.2.14",
     "sqlite3": "^4.0.6",
-    "swagger-ui-express": "^4.0.2",
     "ts-node": "^8.0.2",
     "typescript": "^3.3.3"
+  },
+  "apidoc": {
+    "name": "Faker REST API",
+    "title": "Faker REST API",
+    "version": "1.0.0",
+    "description": "Documentation of REST endpoints exposed by this API",
+    "forceLanguage": "en"
   }
 }

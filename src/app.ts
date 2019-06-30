@@ -6,18 +6,11 @@ import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import { scheduleJob } from 'node-schedule';
 import path from 'path';
-import swaggerUi from 'swagger-ui-express';
-const swaggerDocument = require('../swagger.json');
 
 import passport from 'passport';
 import './passport';
 
-import {
-  authRouter,
-  maintenanceRouter,
-  todoRouter,
-  userRouter
-} from './routes';
+import { initRoutes } from './routes';
 
 const app = express();
 
@@ -36,20 +29,18 @@ const startApp = async () => {
 
   app.get('/', (req, res) => {
     const variables = {
-      githubRepositoryUrl: 'https://github.com/cerino-ligutom/Faker-REST-Server',
+      githubRepositoryUrl:
+        'https://github.com/cerino-ligutom/Faker-REST-Server',
       zeferinixSiteUrl: 'https://www.zeferinix.com',
-      restEndpoint: `http://faker-rest.zeferinix.com/api`
-    }
+      restEndpoint: `http://faker-rest.zeferinix.com/api/v1`
+    };
     res.render('index', variables);
   });
 
-  app.use('/api/maintenance', maintenanceRouter);
-  app.use('/api/users', userRouter);
-  app.use('/api/todos', todoRouter);
-  app.use('/api/auth', authRouter);
-  
-  // Swagger Docs
-  app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+  initRoutes(app);
+
+  // ApiDoc
+  app.use('/api/v1', express.static('apidoc/v1'));
 
   // Reset DB every midnight
   scheduleJob('0 0 * * *', fireDate => {
@@ -76,7 +67,8 @@ const startApp = async () => {
     res.redirect('/');
   });
 
-  app.listen(env.PORT, () => {
+  // app.listen(env.PORT, () => {
+  app.listen(9990, () => {
     // tslint:disable-next-line:no-console
     console.info(`Server is now up @ ${env.HOST}:${env.PORT}`);
   });

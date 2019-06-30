@@ -1,12 +1,16 @@
-import { Todo } from '@app/models';
+import { Todo, User } from '@app/models';
 import { Request, Response } from 'express';
 import { BaseController } from './base.controller';
 
 export class TodoController extends BaseController {
   async getAllTodos(req: Request, res: Response) {
-    const todos = await Todo.query();
-    const todosDto = todos.map(todo => todo.getDto());
-    res.send(todosDto);
+    let { page, pageSize } = req.query;
+
+    if (!page) page = 0;
+    if (!pageSize) pageSize = 8;
+
+    const result = await Todo.query().page(page, pageSize);
+    res.send(result);
   }
 
   async getTodoById(req: Request, res: Response) {
@@ -26,9 +30,24 @@ export class TodoController extends BaseController {
 
   async getTodosByUserId(req: Request, res: Response) {
     const { userId } = req.params;
-    const todos = await Todo.query().where('ownerId', userId);
-    const todosDto = todos.map(todo => todo.getDto());
-    res.send(todosDto);
+    let { page, pageSize } = req.query;
+
+    if (!page) page = 0;
+    if (!pageSize) pageSize = 8;
+
+    const user = await User.query().findById(userId);
+
+    if (!user) {
+      res.status(404).send({
+        message: 'User not found.'
+      });
+      return;
+    }
+
+    const result = await Todo.query()
+      .where('ownerId', userId)
+      .page(page, pageSize);
+    res.send(result);
   }
 
   async createTodo(req: Request, res: Response) {

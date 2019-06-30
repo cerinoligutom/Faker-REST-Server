@@ -1,4 +1,6 @@
-export * from './maintenance.routes';
-export * from './user.routes';
-export * from './todo.routes';
-export * from './auth.routes';
+import { Express } from 'express';
+import { routes as v1Routes } from './v1';
+
+export const initRoutes = (app: Express) => {
+  app.use('/api/v1', v1Routes);
+};
