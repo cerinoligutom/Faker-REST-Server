@@ -68,7 +68,7 @@ const startApp = async () => {
   });
 
   // app.listen(env.PORT, () => {
-  app.listen(9990, () => {
+  app.listen(env.PORT, () => {
     // tslint:disable-next-line:no-console
     console.info(`Server is now up @ ${env.HOST}:${env.PORT}`);
   });
