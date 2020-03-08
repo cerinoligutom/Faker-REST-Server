@@ -32,7 +32,7 @@ const startApp = async () => {
       githubRepositoryUrl:
         'https://github.com/cerino-ligutom/Faker-REST-Server',
       zeferinixSiteUrl: 'https://www.zeferinix.com',
-      restEndpoint: `http://faker-rest.zeferinix.com/api/v1`
+      restEndpoint: `https://faker-rest.zeferinix.com/api/v1`
     };
     res.render('index', variables);
   });
